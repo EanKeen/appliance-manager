@@ -3,6 +3,41 @@
 
 
   <div class="not-logged-in">
+          <!-- <section>
+            <b-field label="Name">
+                <b-input value="Kevin Garvey"></b-input>
+            </b-field>
+
+            <b-field label="Email"
+                type="is-danger"
+                message="This email is invalid">
+                <b-input type="email"
+                    value="john@"
+                    maxlength="30">
+                </b-input>
+            </b-field>
+
+            <b-field label="Username"
+                type="is-success"
+                message="This username is available">
+                <b-input value="johnsilver" maxlength="30"></b-input>
+            </b-field>
+
+            <b-field label="Password"
+                type="is-warning"
+                :message="['Password is too short', 'Password must have at least 8 characters']">
+                <b-input value="123" type="password" maxlength="30"></b-input>
+            </b-field>
+
+            <b-field label="Subject">
+                <b-select placeholder="Select a subject">
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                </b-select>
+            </b-field>
+        </section> -->
+
+
 
     <div class="card">
       <div class="card-content">
@@ -11,14 +46,26 @@
         </p>
         <div class="man-flex">
 
-          <div class="user flex">
+          <!-- <div class="user flex">
             <h3>Username</h3>
             <input id="top" type="text"></input>
           </div>
           <div class="pass flex">
             <h3>Password</h3>
             <input type="text"></input>
-          </div>
+          </div> -->
+
+          <b-field label="Username"
+              type="is-success"
+              message="Choose a Username">
+              <b-input v-model="username" maxlength="30"></b-input>
+          </b-field>
+
+          <b-field label="Password"
+              type="is-warning"
+              :message="['Choose a Strong Password']">
+              <b-input v-model="password" value="123" type="password" maxlength="30"></b-input>
+          </b-field>
 
         </div>
       </div>
@@ -35,7 +82,12 @@
             </router-link>
           </a>
 
-          <a class="button is-primary router-link">Sign In</a>
+          <a class="button is-primary router-link">
+            <div @click="signIn" class="">
+
+              Sign In
+            </div>
+          </a>
 
 
 
@@ -55,16 +107,32 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      name: ''
+      username: '',
+      password: ''
     }
   },
   methods: {
     test: function() {
-      bus.$emit('name', this.name);
+
     },
     showNavBar: function() {
       // Variable recieved will be "isSignInScreenActive" or along those lines
       bus.$emit('show-nav-bar', false);
+    },
+    signIn: function() {
+      console.log(this.password);
+      console.log(this.password);
+
+      axios.post('/register', {
+        username: this.username,
+        password: this.passowrd
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   }
 }

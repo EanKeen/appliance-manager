@@ -3,7 +3,7 @@
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <a class="navbar-item">
-        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <img src="../assets/logo.png" width="112" height="28">
       </a>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
         <span></span>
@@ -36,6 +36,16 @@
       <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
+            <a class="button is-primary">
+              <router-link to="/signup" class="router-link router-link-button">
+              <!-- <span class="icon">
+                <i class="fas fa-download"></i>
+              </span> -->
+              <span>
+                Sign Up
+              </span>
+              </router-link>
+            </a>
 
           </p>
           <p class="control">
