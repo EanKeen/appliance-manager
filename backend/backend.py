@@ -44,7 +44,7 @@ def setup_stuff():
         appliances = get_appliance(user)
         return appliances
     @app.route('/getcategory', methods=['GET','POST'])
-    def woosh():
+    def woooooooooooosh():
         data=request.get_json()
         appliance=data.get("appliance")
         category = get_category(user)
@@ -226,8 +226,8 @@ def insertData():
     data_entry_reviews("Edwin0101",34562,"Not good. 1 star.",5,23)
 
 #program
-#setup_stuff()
-setup_tables()
+setup_stuff()
+#setup_tables()
 #insertData()
 #print(get_appliance("Edwin0101")[1])
 #print(verify_login("Edwin0101","Pawn1234"))
