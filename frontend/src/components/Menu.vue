@@ -1,5 +1,5 @@
 <template lang="html">
-
+  <div v-if="!signInScreen">
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <a class="navbar-item">
@@ -25,25 +25,11 @@
           My Products
         </router-link>
         </a>
-      <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            <router-link to="/info" class="router-link">
-            Info
-            </router-link>
-          </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item">
-            <router-link to="/about" class="router-link">
-            About
-            </router-link>
-          </a>
-          <a class="navbar-item">
-            <router-link to="/terms" class="router-link">
-            Terms
-          </router-link>
-          </a>
-        </div>
-      </div>
+      <a class="navbar-item">
+        <router-link to="/information" class="router-link">
+        Info
+        </router-link>
+      </a>
     </div>
 
     <div class="navbar-end">
@@ -53,7 +39,7 @@
 
           </p>
           <p class="control">
-            <a class="button is-primary">
+            <a @click="signInClick" class="button is-primary">
               <router-link to="/signin" class="router-link router-link-button">
               <!-- <span class="icon">
                 <i class="fas fa-download"></i>
@@ -69,19 +55,30 @@
     </div>
   </div>
 </nav>
+</div>
 
 
 </template>
 
 <script>
+import bus from '../bus.js'
+
 export default {
   data() {
     return {
       // Change sign in message to 'Hello User'
       signInMessage: 'Sign in',
 
-      // Boolean for is signed in
+      // Boolean for if sign in screen is active
+      signInScreen: false,
+
+      // Boolean for if user is signed in
       signIn: false
+    }
+  },
+  methods: {
+    signInClick: function() {
+      this.signInScreen = !this.signInScreen;
     }
   }
 }

@@ -20,6 +20,11 @@ export default new Router({
       component: () => import('./views/CreateItem.vue')
     },
     {
+      path: '/signin',
+      name: 'sign-in',
+      component: () => import('./views/SignIn.vue')
+    },
+    {
       path: '/',
       name: 'home',
       component: Home
@@ -30,14 +35,9 @@ export default new Router({
       component: () => import('./views/MyItems.vue')
     },
     {
-      path: '/signin',
-      name: 'sign-in',
-      components: () => import('./views/SignIn.vue')
-    },
-    {
-      path: '/terms',
-      name: 'terms',
-      components: () => import('./views/Terms.vue')
+      path: '/information',
+      name: 'info',
+      component: () => import('./views/Info.vue')
     }
   ]
 })

@@ -1,19 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav" v-if="navEnabled">
+    <div id="nav">
       <Menu/>
     </div>
-    <router-view/>
+    <div id="router-view">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script type="text/javascript">
-    import Menu from '@/components/Menu.vue'
+import bus from './bus.js'
+import Menu from '@/components/Menu.vue'
 
     export default {
       data() {
         return {
-          navEnabled: true
+
         }
       },
       components: {
@@ -23,9 +26,10 @@
 </script>
 
 <style scoped lang="scss">
-#app {
-
-
+#router-view {
+  height: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 </style>
