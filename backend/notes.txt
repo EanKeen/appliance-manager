@@ -1,0 +1,21 @@
+Useful Commands
+1.) Use a local project environment (so our global packages don't interfere with the ones we need for this project)
+1.1.) Create local environment
+virtualenv local-environ-name
+
+1.1.) Go to a local environment
+Win
+./environ-name/Scripts/activate
+Mac
+source ./environ-name/bin/activate
+
+1.2.) Go to global environment (stop using local one)
+deactivate
+
+
+2.) Make requirements.txt
+2.1.)
+pip freeze --local > requirements.txt
+
+2.2.) Install packages baseed on requirements.txt
+pip install -r requirements.txt
