@@ -23,9 +23,9 @@ def setup_stuff():
             user = data.get("username")
             password = data.get("password")
             data_entry(user,password)
-            return jsonify(user)
+            return "Success"
         except:
-            return jsonify("Error registering user.")
+            return "Failure"
     @app.route("/login",methods=['GET','POST'])
     def login_user():
         data=request.get_json()
@@ -35,9 +35,7 @@ def setup_stuff():
         if actual==passwordtocheck:
             return "Success"
         else:
-            return actual
-
-            
+            return "Failure"
                 
     @app.route('/getappliances', methods=['GET','POST'])
     def woosh():
@@ -46,6 +44,7 @@ def setup_stuff():
         appliances = get_appliance(user)
         print(jsonify(appliances))
         return appliances
+
     @app.route('/getreviews', methods=['GET','POST'])
     def reddit():
         data=request.get_json()
@@ -53,6 +52,25 @@ def setup_stuff():
         reviews=get_review(product)
         print(jsonify(reviews))
         return reviews
+
+    @app.route('/newappliance', methods=['GET','POST'])
+    def woooooosh():
+        data=request.get_json()
+        user=data.get("username")
+        appliance=data.get("appliancename")
+        data_entry_appliances(user,appliance)
+        return "Success"
+#user,product,reviews,stars,upvotes
+    @app.route('/newreview',methods=['GET','POST'])
+    def flexy():
+        data=request.get_json()
+        user=data.get('username')
+        product=data.get('product')
+        reviews=data.get('reviews')
+        stars=data.get('stars')
+        upvotes=data.get('upvotes')
+        data_entry_reviews(user,product,reviews,stars,upvotes)
+        return "Success"
 
     @app.route('/pinger', methods=['POST'])
     def ping_ponger():
@@ -85,11 +103,10 @@ def create_table(tablename):
     c.execute("CREATE TABLE IF NOT EXISTS "+tablename+"(user TEXT,password TEXT)")
 
 def create_table2(tablename):
-    c.execute("CREATE TABLE IF NOT EXISTS "+tablename+" (user TEXT, appliance TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS "+tablename+" (user TEXT, appliance TEXT, category TEXT)")         #search by appliance name or category.
     
 def create_table3(tablename):
     c.execute("CREATE TABLE IF NOT EXISTS "+tablename+" (user TEXT, productID INT, review TEXT, stars INT,upvotes INT)")
-
 #####Data Entry#####
 
 def data_entry_login(username,password):
@@ -201,8 +218,8 @@ def insertData():
     data_entry_reviews("Edwin0101",34562,"Not good. 1 star.",5,23)
 
 #program
-setup_stuff()
-#setup_tables()
+#setup_stuff()
+setup_tables()
 #insertData()
 #print(get_appliance("Edwin0101")[1])
 #print(verify_login("Edwin0101","Pawn1234"))
