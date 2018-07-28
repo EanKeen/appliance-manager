@@ -1,9 +1,8 @@
-node_modules/
-virtual-env/
+node_modules
+virtual-env
 
 .DS_Store
 node_modules
-/dist
 
 # local env files
 .env.local
