@@ -24,12 +24,22 @@
       </div>
       <footer class="card-footer">
         <div class="back">
-          <a id="left-button" class="button is-primary is-info">
+          <!-- <a @click="showNavBar" id="left-button" class="button is-primary router-link">
             <router-link to="/" class="router-link">
             Back
           </router-link>
+          </a> -->
+          <a class="button is-primary router-link" id="left-button">
+            <router-link to="/" class="router-link router-link-button">
+              Back
+            </router-link>
           </a>
-          <a class="button is-primary is-normal">Submit</a>
+
+          <a class="button is-primary router-link">Sign In</a>
+
+
+
+
 
         </div>
       </footer>
@@ -51,6 +61,10 @@ export default {
   methods: {
     test: function() {
       bus.$emit('name', this.name);
+    },
+    showNavBar: function() {
+      // Variable recieved will be "isSignInScreenActive" or along those lines
+      bus.$emit('show-nav-bar', false);
     }
   }
 }
@@ -88,7 +102,6 @@ export default {
 
 .card {
   width: 400px;
-  margin-top: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;

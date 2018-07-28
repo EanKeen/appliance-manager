@@ -4,7 +4,11 @@
       <div v-if="!loggedIn" class="not-logged-in">
         <h1>Hi! You don't seem to be signed in</h1>
         <h3>Please sign in to view personalized content</h3>
-        <a class="buttoner button is-primary is-large">Sign In</a>
+        <router-link to="/signin" class="router-link">
+        <a class="buttoner button is-primary is-large">
+          Sign In
+        </a>
+      </router-link>
       </div>
     </div>
 

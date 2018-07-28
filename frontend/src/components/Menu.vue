@@ -39,7 +39,7 @@
 
           </p>
           <p class="control">
-            <a @click="signInClick" class="button is-primary">
+            <a class="button is-primary">
               <router-link to="/signin" class="router-link router-link-button">
               <!-- <span class="icon">
                 <i class="fas fa-download"></i>
@@ -63,6 +63,7 @@
 <script>
 import bus from '../bus.js'
 
+
 export default {
   data() {
     return {
@@ -78,8 +79,14 @@ export default {
   },
   methods: {
     signInClick: function() {
-      this.signInScreen = !this.signInScreen;
+      //this.signInScreen = !this.signInScreen;
     }
+  },
+  mounted() {
+    bus.$on('show-nav-bar', (data) => {
+      //this.signInScreen = data;
+    });
+
   }
 }
 </script>
