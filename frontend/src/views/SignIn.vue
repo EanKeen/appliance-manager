@@ -108,7 +108,8 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      url: 'http://localhost:5000'
     }
   },
   methods: {
@@ -120,10 +121,10 @@ export default {
       bus.$emit('show-nav-bar', false);
     },
     signIn: function() {
-      console.log(this.password);
+      console.log(this.username);
       console.log(this.password);
 
-      axios.post('/register', {
+      axios.post(this.url + '/login', {
         username: this.username,
         password: this.passowrd
       })

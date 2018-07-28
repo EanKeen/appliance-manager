@@ -36,7 +36,7 @@ def setup_stuff():
             return "Success"
         else:
             return "Failure"
-                
+
     @app.route('/getappliances', methods=['GET','POST'])
     def woosh():
         data=request.get_json()
@@ -81,7 +81,7 @@ def setup_stuff():
         #socketio.run(app)
         # app.run(host='0.0.0.0', port=5000)
         app.run()
-#setup_stuff()
+setup_stuff()
 
 def nth_repl(s, sub, repl, nth):
     find = s.find(sub)
@@ -104,7 +104,7 @@ def create_table(tablename):
 
 def create_table2(tablename):
     c.execute("CREATE TABLE IF NOT EXISTS "+tablename+" (user TEXT, appliance TEXT, category TEXT)")         #search by appliance name or category.
-    
+
 def create_table3(tablename):
     c.execute("CREATE TABLE IF NOT EXISTS "+tablename+" (user TEXT, productID INT, review TEXT, stars INT,upvotes INT)")
 #####Data Entry#####
@@ -145,7 +145,7 @@ def data_entry_reviews(user,product,reviews,stars,upvotes):
         c.execute("INSERT INTO reviews (user,productID,review,stars,upvotes) VALUES(?,?,?,?,?)",(user,product,reviews,stars,upvotes))
     conn.commit()
 
-#####Get information#####    
+#####Get information#####
 def get_password(username):
         c.execute("SELECT user,password from login WHERE user='"+username+"'")
         for row in c.fetchall():
@@ -171,7 +171,7 @@ def get_review(productID):
         returner=nth_repl(returner,",","",returner.count(",")).replace("[,",",[")
         returner+="]"
     return returner
-        
+
 
 #####Clear Empty Rows#####
 
@@ -179,18 +179,18 @@ def clear_empty_row_login():
     c.execute("SELECT user FROM login")
     c.execute("DELETE FROM login WHERE user IS NULL OR trim(user) = ''")
     conn.commit()
-    
+
 def clear_empty_row_appliances():
     c.execute("SELECT user FROM appliances")
     c.execute("DELETE FROM appliances WHERE user IS NULL OR trim(user) = ''")
     conn.commit()
-    
+
 def clear_empty_row_reviews():
     c.execute("SELECT user FROM reviews")
     c.execute("DELETE FROM reviews WHERE user IS NULL OR trim(user) = ''")
     conn.commit()
 
-#####Login#####    
+#####Login#####
 
 def verify_login(username, thepassword):
     c.execute("SELECT password FROM login WHERE user = '"+username+"'")
@@ -199,7 +199,7 @@ def verify_login(username, thepassword):
             return 0
         else:
             return -1
-    
+
 def encrypt(password):
     m = sha512()
     m.update(bytes(password,'utf-8'))
