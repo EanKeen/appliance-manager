@@ -26,21 +26,33 @@ def setup_stuff():
             return jsonify(user)
         except:
             return jsonify("Error registering user.")
+    @app.route("/login",methods=['GET','POST'])
+    def login_user():
+        data=request.get_json()
+        user=data.get("username")
+        passwordtocheck=encrypt(data.get("password"))
+        actual = get_password(user)
+        if actual==passwordtocheck:
+            return "Success"
+        else:
+            return actual
 
+            
+                
     @app.route('/getappliances', methods=['GET','POST'])
     def woosh():
         data=request.get_json()
         user=data.get("username")
         appliances = get_appliance(user)
         print(jsonify(appliances))
-        return jsonify(appliances)
+        return appliances
     @app.route('/getreviews', methods=['GET','POST'])
     def reddit():
         data=request.get_json()
         product=data.get("productID")
         reviews=get_review(product)
         print(jsonify(reviews))
-        return jsonify(reviews)
+        return reviews
 
     @app.route('/pinger', methods=['POST'])
     def ping_ponger():
@@ -117,13 +129,17 @@ def data_entry_reviews(user,product,reviews,stars,upvotes):
     conn.commit()
 
 #####Get information#####    
-    
+def get_password(username):
+        c.execute("SELECT user,password from login WHERE user='"+username+"'")
+        for row in c.fetchall():
+            return row[1]
 def get_appliance(username):
     rows=[]
     returner='[ ["'+username+'"],'
-    c.execute("SELECT user,appliance from appliances WHERE user='"+username+"'")
-    for row in c.fetchall():
-        returner+=',"'+row[1]+'"'.replace(",","",1)
+    for i in range(1,2):
+        c.execute("SELECT user,appliance from appliances WHERE user='"+username+"'")
+        for row in c.fetchall():
+            returner+=',"'+row[i]+'"'.replace(",","",1)
     returner+="]]"
     returner=nth_repl(returner,",","",2)
     return returner
@@ -136,6 +152,7 @@ def get_review(productID):
             returner+=',"'+str(row[i])+'"'.replace(",","",1)
             returner+="],"
         returner=nth_repl(returner,",","",returner.count(",")).replace("[,",",[")
+        returner+="]"
     return returner
         
 
@@ -180,14 +197,14 @@ def setup_tables():
     create_table3("reviews")
 def insertData():
     data_entry_appliances("Edwin0101","Coffee Machine")
-    data_entry_login("Edwin","Pawn1234")
+    data_entry_login("orangeyf","pawn")
     data_entry_reviews("Edwin0101",34562,"Not good. 1 star.",5,23)
 
 #program
 setup_stuff()
-setup_tables()
-insertData()
-print(get_appliance("Edwin0101")[1])
+#setup_tables()
+#insertData()
+#print(get_appliance("Edwin0101")[1])
 #print(verify_login("Edwin0101","Pawn1234"))
 
 '''
