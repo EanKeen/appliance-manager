@@ -56,14 +56,14 @@
           </div> -->
 
           <b-field label="Username"
-              type="is-success"
-              message="Choose a Username">
+              type="is-primary"
+              message="Enter Username">
               <b-input v-model="username" maxlength="30"></b-input>
           </b-field>
 
           <b-field label="Password"
-              type="is-warning"
-              :message="['Choose a Strong Password']">
+              type="is-primary"
+              :message="['Enter Password']">
               <b-input v-model="password" value="123" type="password" maxlength="30"></b-input>
           </b-field>
 
@@ -123,19 +123,32 @@ export default {
     signIn: function() {
       console.log(this.username);
       console.log(this.password);
+      //console.log(this.BIcons.type);
+      //console.log(this.type);
 
-      axios.post(this.url + '/login', {
+      const creds = {
         username: this.username,
-        password: this.passowrd
-      })
+        password: this.password
+      }
+
+      const that = this;
+      axios.post(this.url + '/login', creds)
       .then(function (response) {
         console.log(response);
+        if(response.data == "Success") {
+          that.$router.push('/user');
+          bus.$emit('register-success', creds.username);
+        }
+
       })
       .catch(function (error) {
         console.log(error);
       });
     }
-  }
+  },
+  props: [
+    'type'
+  ]
 }
 </script>
 

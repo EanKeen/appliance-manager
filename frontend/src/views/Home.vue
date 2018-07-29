@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div v-if="!loggedIn">
       <div v-if="!loggedIn" class="not-logged-in">
         <h1>Hi! You don't seem to be signed in</h1>
         <h3>Please sign in to view personalized content</h3>
@@ -10,7 +9,6 @@
         </a>
       </router-link>
       </div>
-    </div>
 
     <div v-if="loggedIn" class="logged-in">
       <h1>Welcome, User</h1>
@@ -19,6 +17,7 @@
 </template>
 
 <script>
+import bus from '../bus.js'
 import NotSignedIn from '../components/NotSignedIn.vue';
 
 export default {
@@ -31,14 +30,20 @@ export default {
     }
   },
   methods: {
-    test: function() {
-      bus.$on('sign-in-screen', (data) => {
-        this.name = data;
-      });
-    }
+
   },
   components: {
     NotSignedIn
+  },
+  mounted() {
+    /*
+    bus.$on('register-success', (data) => {
+      this.loggedIn = data;
+      vm.$set('loggedIn', data)
+      console.log(data);
+      console.log(this.loggedIn);
+    });
+    */
   }
 }
 </script>

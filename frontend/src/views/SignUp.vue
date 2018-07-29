@@ -11,14 +11,27 @@
         </p>
         <div class="man-flex">
 
-          <div class="user flex">
+          <!-- <div class="user flex">
             <h3>Username</h3>
             <input id="top" type="text"></input>
           </div>
           <div class="pass flex">
             <h3>Password</h3>
             <input type="text"></input>
-          </div>
+          </div> -->
+
+
+          <b-field label="Username"
+              type="is-primary"
+              message="Choose a Username">
+              <b-input v-model="username" maxlength="30"></b-input>
+          </b-field>
+
+          <b-field label="Password"
+              type="is-primary"
+              :message="['Choose a Strong Password']">
+              <b-input v-model="password" value="123" type="password" maxlength="30"></b-input>
+          </b-field>
 
         </div>
       </div>
@@ -52,7 +65,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      name: ''
+      username: ''
     }
   },
   methods: {
