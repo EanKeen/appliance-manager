@@ -42,13 +42,13 @@ def setup_stuff():
         data=request.get_json()
         user=data.get("username")
         appliances = get_appliance(user)
-        return appliances
+        return jsonify(appliances)
     @app.route('/getcategory', methods=['GET','POST'])
     def woooooooooooosh():
         data=request.get_json()
         appliance=data.get("appliance")
-        category = get_category(user)
-        return appliances
+        category = get_category(appliance)
+        return jsonify(appliances)
 
     @app.route('/getreviews', methods=['GET','POST'])
     def reddit():
@@ -58,14 +58,18 @@ def setup_stuff():
         print(jsonify(reviews))
         return reviews
 
+
+
     @app.route('/newappliance', methods=['GET','POST'])
     def woooooosh():
         data=request.get_json()
         user=data.get("username")
         appliance=data.get("appliancename")
-        data_entry_appliances(user,appliance)
+        category=data.get("category")
+        data_entry_appliances(user,appliance,category)
         return "Success"
 #user,product,reviews,stars,upvotes
+
     @app.route('/newreview',methods=['GET','POST'])
     def flexy():
         data=request.get_json()
@@ -128,7 +132,7 @@ def data_entry_login(username,password):
         #Error 001
         print("Already exists!")
 
-def data_entry_appliances(owner,appliancename):
+def data_entry_appliances(owner,appliancename,category):
     isInAppliances=False
     c.execute("SELECT appliance FROM appliances")
     for row in c.fetchall():
@@ -136,7 +140,7 @@ def data_entry_appliances(owner,appliancename):
             isInAppliances=True
             break
     if isInAppliances==False:
-        c.execute("INSERT INTO appliances (user,appliance) VALUES(?,?)",(owner,appliancename))
+        c.execute("INSERT INTO appliances (user,appliance,category) VALUES(?,?,?)",(owner,appliancename,category))
     conn.commit()
 
 def data_entry_reviews(user,product,reviews,stars,upvotes):
@@ -159,10 +163,11 @@ def get_appliance(username):
     rows=[]
     returner='[ ["'+username+'"],'
     for i in range(1,2):
-        c.execute("SELECT user,appliance from appliances WHERE user='"+username+"'")
+        c.execute("SELECT user,appliance FROM appliances WHERE user='"+username+"'")
         for row in c.fetchall():
             returner+=',"'+row[i]+'"'.replace(",","",1)
-    returner+="]]"
+            returner+="],"
+    returner+="]"
     returner=nth_repl(returner,",","",2)
     return returner
 
@@ -170,7 +175,7 @@ def get_review(productID):
     returner='[ ["'+str(productID)+'"]'
     for i in range(2,5):
         returner+="["
-        c.execute("SELECT user,productID,review,stars,upvotes from reviews WHERE productID="+str(productID))
+        c.execute("SELECT user,productID,review,stars,upvotes FROM reviews WHERE productID="+str(productID))
         for row in c.fetchall():
             returner+=',"'+str(row[i])+'"'.replace(",","",1)
             returner+="],"
@@ -178,8 +183,17 @@ def get_review(productID):
         returner+="]"
     return returner
 
-# def get_category(appliance):
-    #returner='[["'+str(appliance)+'"]'
+def get_category(appliance):
+    returner='[["'+str(appliance)+'"]'
+    for i in range(2,5):
+        returner+="["
+        c.execute("SELECT user,appliance,category FROM appliances WHERE appliance="+str(appliance))
+        for row in c.fetchall():
+            returner+=',"'+str(row[i])+'"'.replace(",","",1)
+            returner+="],"
+        returner=nth_repl(returner,",","",returner.count(",")).replace("[,",",[")
+        returner+="]"
+    return returner
 
 #####Clear Empty Rows#####
 
@@ -221,7 +235,7 @@ def setup_tables():
     create_table2("appliances")
     create_table3("reviews")
 def insertData():
-    #data_entry_appliances("Edwin0101","Coffee Machine")
+    data_entry_appliances("Edwin0101","Coffee Machine","Kitchen")
     data_entry_login("orangeyf","pawn")
     data_entry_reviews("Edwin0101",34562,"Not good. 1 star.",5,23)
 
